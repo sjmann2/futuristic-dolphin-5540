@@ -18,6 +18,17 @@ RSpec.describe Ride, type: :model do
         expect(Ride.order_by_thrill).to eq([hurler, scrambler, ferris])
       end
     end
+
+    describe 'order_alphabetically' do
+      it 'orders rides alphabetically' do
+        valley_fair = AmusementPark.create!(name: 'Valley Fair', admission_cost: 65)
+        steel_venom = valley_fair.rides.create!(name: 'The Steel Venom', thrill_rating: 9, open: true)
+        renegade = valley_fair.rides.create!(name: 'The Renegade', thrill_rating: 7, open: true)
+        scrambler = valley_fair.rides.create!(name: 'The Scrambler', thrill_rating: 4, open: true)
+
+        expect(Ride.order_alphabetically).to eq([renegade, scrambler, steel_venom])
+      end
+    end
   end
   
   describe 'instance methods' do
