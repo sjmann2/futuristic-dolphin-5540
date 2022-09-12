@@ -1,10 +1,3 @@
-# Story 2 - Mechanic Show Page
-
-# As a user,
-# When I visit a mechanic show page
-# I see their name, years of experience, and the names of rides they’re working on
-# And I only see rides that are open
-# And the rides are listed by thrill rating in descending order (most thrills first)
 require 'rails_helper'
 
 RSpec.describe 'the mechanic show page' do
@@ -61,5 +54,47 @@ RSpec.describe 'the mechanic show page' do
         end
       end
     end
+    
+    describe 'I see a form to add a ride to their workload' do
+      it 'displays a form to add a ride to a mechanics workload' do
+        six_flags = AmusementPark.create!(name: 'Six Flags', admission_cost: 75)
+
+        scrambler = six_flags.rides.create!(name: 'The Scrambler', thrill_rating: 4, open: true)
+        ferris = six_flags.rides.create!(name: 'Ferris Wheel', thrill_rating: 7, open: false)
+
+        sandy = Mechanic.create!(name: "Sandy", years_experience: 10)
+
+        sandy_scrambler = RideMechanic.create!(ride_id: scrambler.id, mechanic_id: sandy.id)
+
+        visit "/mechanics/#{sandy.id}"
+
+        fill_in('ride id', with: "#{ferris.id}")
+        click_on 'Submit'
+
+        expect(current_path).to eq("/mechanics/#{sandy.id}")
+
+        expect(page).to have_content(ferris.id)
+      end
+    end
   end
 end
+
+# As a user,
+# When I go to a mechanics show page
+# I see a form to add a ride to their workload
+# When I fill in that field with an id of an existing ride and hit submit
+# I’m taken back to that mechanic's show page
+# And I see the name of that newly added ride on this mechanics show page
+
+# Ex:
+# Mechanic: Kara Smith
+# Years of Experience: 11
+
+# Current rides they’re working on:
+# The Frog Hopper
+# Fahrenheit
+# The Kiss Raise
+
+# Add a ride to workload:
+# Ride Id: _pretend_this_is_a_textfield_
+# Submit
