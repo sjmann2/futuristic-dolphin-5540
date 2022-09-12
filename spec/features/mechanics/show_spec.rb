@@ -24,7 +24,7 @@ RSpec.describe 'the mechanic show page' do
             josh_scrambler = RideMechanic.create!(ride_id: scrambler.id, mechanic_id: josh.id)
             
             visit "/mechanics/#{josh.id}"
-
+            save_and_open_page
             expect(page).to have_content(josh.name)
             expect(page).to have_content(josh.years_experience)
             expect(page).to have_content(hurler.name)
