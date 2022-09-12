@@ -6,6 +6,7 @@ RSpec.describe Ride, type: :model do
     it { should have_many :ride_mechanics }
     it { should have_many(:mechanics).through(:ride_mechanics)}
   end
+
   describe 'class methods' do
     describe 'order_by_thrill' do
       it 'orders rides by most thrilling to least' do
@@ -27,6 +28,18 @@ RSpec.describe Ride, type: :model do
         scrambler = valley_fair.rides.create!(name: 'The Scrambler', thrill_rating: 4, open: true)
 
         expect(Ride.order_alphabetically).to eq([renegade, scrambler, steel_venom])
+      end
+    end
+
+    describe 'average_thrill_rating' do
+      it 'returns the average thrill rating of all rides' do
+        six_flags = AmusementPark.create!(name: 'Six Flags', admission_cost: 75)
+            
+        scrambler = six_flags.rides.create!(name: 'The Scrambler', thrill_rating: 4, open: true)
+        hurler = six_flags.rides.create!(name: 'The Hurler', thrill_rating: 7, open: true)
+        ferris = six_flags.rides.create!(name: 'Ferris Wheel', thrill_rating: 3, open: false)
+
+        expect(Ride.average_thrill_rating.round(2)).to eq(4.67)
       end
     end
   end
