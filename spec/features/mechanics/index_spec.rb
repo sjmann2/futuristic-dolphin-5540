@@ -19,17 +19,18 @@ RSpec.describe 'the mechanic index page' do
           ferris = six_flags.rides.create!(name: 'Ferris Wheel', thrill_rating: 7, open: false)
 
           josh = Mechanic.create!(name: "Josh", years_experience: 5)
-          josh_hurler = RideMechanic.create!(ride_id: hurler, mechanic_id: josh)
+          josh_hurler = RideMechanic.create!(ride_id: hurler.id, mechanic_id: josh.id)
 
           sandy = Mechanic.create!(name: "Sandy", years_experience: 10)
-          sandy_scrambler = RideMechanic.create!(ride_id: scrambler, mechanic_id: sandy)
+          sandy_scrambler = RideMechanic.create!(ride_id: scrambler.id, mechanic_id: sandy.id)
 
           miya = Mechanic.create!(name: "Miya", years_experience: 2)
-          miya_ferris = RideMechanic.create!(ride_id: ferris, mechanic_id: miya)
-          miya_scrambler = RideMechanic.create!(ride_id: scrambler, mechanic_id: miya)
+          miya_ferris = RideMechanic.create!(ride_id: ferris.id, mechanic_id: miya.id)
+          miya_scrambler = RideMechanic.create!(ride_id: scrambler.id, mechanic_id: miya.id)
 
           visit '/mechanics'
 
+          expect(page).to have_content('All Mechanics')
           expect(page).to have_content(@josh.name)
           expect(page).to have_content(@sandy.name)
           expect(page).to have_content(@miya.name)
