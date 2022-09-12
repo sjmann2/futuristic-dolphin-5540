@@ -3,3 +3,5 @@
   <p>Mechanic: <%= mechanic.name %></p>
   <p>Years of Experience: <%= mechanic.years_experience %></p>
 <% end %>
+
+<h2>Average years experience of all mechanics: <%= @mechanics_avg_experience.round(2) %></h2>
