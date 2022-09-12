@@ -6,4 +6,8 @@ class Ride < ApplicationRecord
   def open?
     open
   end
+
+  def self.order_by_thrill
+    self.order(thrill_rating: :desc)
+  end
 end
