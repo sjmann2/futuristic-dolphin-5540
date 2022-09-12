@@ -35,7 +35,7 @@ RSpec.describe 'the amusement park show page' do
       steel_venom = valley_fair.rides.create!(name: 'The Steel Venom', thrill_rating: 9, open: true)
 
       visit "amusement_parks/#{valley_fair.id}"
-
+      save_and_open_page
       expect(renegade.name).to appear_before(scrambler.name)
       expect(scrambler.name).to appear_before(steel_venom.name)
     end
