@@ -35,12 +35,20 @@ RSpec.describe 'the amusement park show page' do
       steel_venom = valley_fair.rides.create!(name: 'The Steel Venom', thrill_rating: 9, open: true)
 
       visit "amusement_parks/#{valley_fair.id}"
-      save_and_open_page
+      
       expect(renegade.name).to appear_before(scrambler.name)
       expect(scrambler.name).to appear_before(steel_venom.name)
     end
 
-    it 'lists the average thrill rating of this amusement parks rides'
+    it 'lists the average thrill rating of this amusement parks rides' do
+      valley_fair = AmusementPark.create!(name: 'Valley Fair', admission_cost: 65)
+      renegade = valley_fair.rides.create!(name: 'The Renegade', thrill_rating: 7, open: true)
+      scrambler = valley_fair.rides.create!(name: 'The Scrambler', thrill_rating: 4, open: true)
+      steel_venom = valley_fair.rides.create!(name: 'The Steel Venom', thrill_rating: 9, open: true)
 
+      visit "amusement_parks/#{valley_fair.id}"
+
+      expect(page).to have_content("Average thrill rating for rides at #{valley_fair.name}: 6.67")
+    end
   end
 end
