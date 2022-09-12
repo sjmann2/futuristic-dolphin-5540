@@ -20,8 +20,9 @@ RSpec.describe Mechanic, type: :model do
 
   describe 'instance methods' do
     describe 'mechanic_rides' do
-      it 'lists all of a mechanics rides' do
+      it 'lists all of a mechanics rides that are open' do
         josh = Mechanic.create!(name: "Josh", years_experience: 5)
+        sandy = Mechanic.create!(name: "sandy", years_experience: 7)
 
         six_flags = AmusementPark.create!(name: 'Six Flags', admission_cost: 75)
 
@@ -32,6 +33,7 @@ RSpec.describe Mechanic, type: :model do
         josh_scrambler = RideMechanic.create!(ride_id: scrambler.id, mechanic_id: josh.id)
 
         expect(josh.mechanic_rides).to eq('The Hurler, The Scrambler')
+        expect(sandy.mechanic_rides).to eq('')
       end
     end
   end

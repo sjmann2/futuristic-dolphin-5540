@@ -22,11 +22,13 @@ RSpec.describe 'the mechanic show page' do
             josh = Mechanic.create!(name: "Josh", years_experience: 5)
             josh_hurler = RideMechanic.create!(ride_id: hurler.id, mechanic_id: josh.id)
             josh_scrambler = RideMechanic.create!(ride_id: scrambler.id, mechanic_id: josh.id)
+            josh_ferris = RideMechanic.create!(ride_id: ferris.id, mechanic_id: josh.id)
             
             visit "/mechanics/#{josh.id}"
             
             expect(page).to have_content(josh.name)
             expect(page).to have_content(josh.years_experience)
+            expect(page).to_not have_content(ferris.name)
             expect(page).to have_content(hurler.name)
             expect(page).to have_content(scrambler.name)
           end
@@ -47,7 +49,7 @@ RSpec.describe 'the mechanic show page' do
             josh_wild_thing = RideMechanic.create!(ride_id: wild_thing.id, mechanic_id: josh.id)
 
             visit "/mechanics/#{josh.id}"
-
+            
             expect(page).to have_content(hurler.name)
             expect(page).to have_content(wild_thing.name)
             expect(page).to have_content(scrambler.name)
