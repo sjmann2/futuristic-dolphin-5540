@@ -54,13 +54,13 @@ RSpec.describe 'the mechanic show page' do
         end
       end
     end
-    
+
     describe 'I see a form to add a ride to their workload' do
       it 'displays a form to add a ride to a mechanics workload' do
         six_flags = AmusementPark.create!(name: 'Six Flags', admission_cost: 75)
 
         scrambler = six_flags.rides.create!(name: 'The Scrambler', thrill_rating: 4, open: true)
-        ferris = six_flags.rides.create!(name: 'Ferris Wheel', thrill_rating: 7, open: false)
+        frog_hopper = six_flags.rides.create!(name: 'The Frog Hopper', thrill_rating: 2, open: true)
 
         sandy = Mechanic.create!(name: "Sandy", years_experience: 10)
 
@@ -68,12 +68,12 @@ RSpec.describe 'the mechanic show page' do
 
         visit "/mechanics/#{sandy.id}"
 
-        fill_in('ride id', with: "#{ferris.id}")
+        fill_in("Add ride to #{sandy.name}'s workload", with: "#{frog_hopper.id}")
         click_on 'Submit'
 
         expect(current_path).to eq("/mechanics/#{sandy.id}")
-
-        expect(page).to have_content(ferris.id)
+        save_and_open_page
+        expect(page).to have_content(frog_hopper.name)
       end
     end
   end

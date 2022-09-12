@@ -6,7 +6,7 @@ class Mechanic < ApplicationRecord
     average(:years_experience)
   end
 
-  def mechanic_rides
-    rides.pluck(:name).join(", ")
-  end
+  # def mechanic_rides
+  #   rides.pluck(:name).join(", ")
+  # end
 end
